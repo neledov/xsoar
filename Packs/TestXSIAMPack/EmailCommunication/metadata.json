@@ -1,0 +1,448 @@
+{
+    "author": "Cortex XSOAR",
+    "authorImage": "content/packs/Base/Author_image.png",
+    "categories": [
+        "Email"
+    ],
+    "certification": "certified",
+    "commit": "2dd9ec7632b2806f6aad0819aa0e33707aa4efd8",
+    "contentCommitHash": null,
+    "contentDisplays": {
+        "automation": "Automations",
+        "classifier": "Classifiers",
+        "incidentfield": "Incident Fields",
+        "incidenttype": "Incident Type",
+        "layoutscontainer": "Layouts Containers"
+    },
+    "contentItems": {
+        "automation": [
+            {
+                "deprecated": false,
+                "description": "Send email reply\nThis automation runs using the default Limited User role, unless you explicitly change the permissions.\nFor more information, see the section about permissions here:\nhttps://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations",
+                "fromversion": "5.0.0",
+                "id": "SendEmailReply",
+                "name": "SendEmailReply",
+                "tags": [],
+                "toversion": ""
+            },
+            {
+                "deprecated": false,
+                "description": "Displays the original email in HTML format.",
+                "fromversion": "5.5.0",
+                "id": "DisplayEmailHtml",
+                "name": "DisplayEmailHtml",
+                "tags": [
+                    "dynamic-section"
+                ],
+                "toversion": ""
+            },
+            {
+                "deprecated": false,
+                "description": "Dynamic-section script for 'Email Threads' layout.\nThis script renders all email messages with the thread number specified in the \"Email Selected Thread\" field and outputs them as a single HTML output.",
+                "fromversion": "6.2.0",
+                "id": "DisplayEmailHtmlThread",
+                "name": "DisplayEmailHtmlThread",
+                "tags": [
+                    "dynamic-section"
+                ],
+                "toversion": ""
+            },
+            {
+                "deprecated": false,
+                "description": "Preprocessing script for email communication layout.\nThis script checks if the incoming email contains an Incident ID to link the mail to an existing incident, and tags the email as \"email-thread\".\nThis script runs with elevated permissions. \nCortex XSOAR recommends using the built-in RBAC functionality to limit access to only those users requiring access to this script.\nFor more information about the preprocessing rules, refer to: https://demisto.developers.paloaltonetworks.com/docs/incidents/incident-pre-processing",
+                "fromversion": "5.0.0",
+                "id": "PreprocessEmail",
+                "name": "PreprocessEmail",
+                "tags": [
+                    "email",
+                    "preProcessing"
+                ],
+                "toversion": ""
+            },
+            {
+                "deprecated": false,
+                "description": "Dynamic-section script for 'Email Threads' layout.\nThis script searches for email threads stored in the Incident context and outputs a table summarizing them.",
+                "fromversion": "6.2.0",
+                "id": "SummarizeEmailThreads",
+                "name": "SummarizeEmailThreads",
+                "tags": [
+                    "dynamic-section"
+                ],
+                "toversion": ""
+            }
+        ],
+        "classifier": [
+            {
+                "deprecated": false,
+                "description": "Classifies MS Graph Mail email messages.",
+                "fromversion": "6.0.0",
+                "id": "173a8bc5-663b-4478-89a5-d2ce2ce8a31f",
+                "name": "MS Graph Mail - Classifier - Email Communication",
+                "toversion": ""
+            },
+            {
+                "deprecated": false,
+                "description": "Classifies Gmail email messages.",
+                "fromversion": "6.0.0",
+                "id": "83d66f08-42b4-4ca6-8145-99bcf7c6b8e5",
+                "name": "Gmail - Classifier - Email Communication",
+                "toversion": ""
+            },
+            {
+                "deprecated": false,
+                "description": "Classifies EWS email messages.",
+                "fromversion": "6.0.0",
+                "id": "0cc88f85-97b7-452e-839c-b58daf0bcf8d",
+                "name": "EWS - Classifier - Email Communication",
+                "toversion": ""
+            },
+            {
+                "deprecated": false,
+                "description": "Classifies MS Graph Mail Single User email messages.",
+                "fromversion": "6.0.0",
+                "id": "MS Graph Mail Single User - Classifier - Email Communication",
+                "name": "MS Graph Mail Single User - Classifier - Email Communication",
+                "toversion": ""
+            },
+            {
+                "deprecated": false,
+                "description": "Maps incoming MS Graph Mail email message fields.",
+                "fromversion": "6.0.0",
+                "id": "4f31271a-c22a-4615-862d-2e315778676e",
+                "name": "MS Graph Mail - Incoming Mapper - Email Communication",
+                "toversion": ""
+            },
+            {
+                "deprecated": false,
+                "description": "Maps incoming EWS email message fields.",
+                "fromversion": "6.0.0",
+                "id": "e92f424d-51f4-4d7c-8e35-502f2a4dac02",
+                "name": "EWS - Incoming Mapper - Email Communication",
+                "toversion": ""
+            },
+            {
+                "deprecated": false,
+                "description": "Maps incoming MS Graph Mail Single User email message fields.",
+                "fromversion": "6.0.0",
+                "id": "MS Graph Mail Single User - Incoming Mapper - Email Communication",
+                "name": "MS Graph Mail Single User - Incoming Mapper - Email Communication",
+                "toversion": ""
+            },
+            {
+                "deprecated": false,
+                "description": "Maps incoming Gmail email message fields.",
+                "fromversion": "6.0.0",
+                "id": "fd0fde44-a619-4273-8c70-569f6620d759",
+                "name": "Gmail - Incoming Mapper - Email Communication",
+                "toversion": ""
+            }
+        ],
+        "incidentfield": [
+            {
+                "deprecated": false,
+                "description": "Add attachments to send here",
+                "fromversion": "6.2.0",
+                "id": "incident_emailnewattachment",
+                "name": "Email New Attachment",
+                "toversion": "",
+                "type": "attachments"
+            },
+            {
+                "deprecated": false,
+                "description": "Use this field to create email body text for use in 'Email Threads' layout",
+                "fromversion": "6.2.0",
+                "id": "incident_emailnewbody",
+                "name": "Email New Body",
+                "toversion": "",
+                "type": "markdown"
+            },
+            {
+                "deprecated": false,
+                "description": "",
+                "fromversion": "6.2.0",
+                "id": "incident_addbcctoemail",
+                "name": "Add BCC To Email",
+                "toversion": "",
+                "type": "shortText"
+            },
+            {
+                "deprecated": false,
+                "description": "Use this field to specify recipients of new email message to send",
+                "fromversion": "6.2.0",
+                "id": "incident_emailnewrecipients",
+                "name": "Email New Recipients",
+                "toversion": "",
+                "type": "shortText"
+            },
+            {
+                "deprecated": false,
+                "description": "Use this field to set a subject line for new email thread on 'Email Threads' layout",
+                "fromversion": "6.2.0",
+                "id": "incident_emailnewsubject",
+                "name": "Email New Subject",
+                "toversion": "",
+                "type": "shortText"
+            },
+            {
+                "deprecated": false,
+                "description": "",
+                "fromversion": "5.0.0",
+                "id": "incident_addcctoemail",
+                "name": "Add CC To Email",
+                "toversion": "",
+                "type": "shortText"
+            },
+            {
+                "deprecated": false,
+                "description": "Field to contain multiple generated codes for matching incoming emails with Incidents",
+                "fromversion": "6.2.0",
+                "id": "incident_emailgeneratedcodes",
+                "name": "Email Generated Codes",
+                "toversion": "",
+                "type": "longText"
+            },
+            {
+                "deprecated": false,
+                "description": "Select the email thread number to view or reply to.",
+                "fromversion": "6.2.0",
+                "id": "incident_emailselectedthread",
+                "name": "Email Selected Thread",
+                "toversion": "",
+                "type": "shortText"
+            },
+            {
+                "deprecated": false,
+                "description": "",
+                "fromversion": "5.0.0",
+                "id": "incident_emailgeneratedcode",
+                "name": "Email Generated Code",
+                "toversion": "",
+                "type": "shortText"
+            }
+        ],
+        "incidenttype": [
+            {
+                "closureScript": "",
+                "days": 0,
+                "deprecated": false,
+                "description": "",
+                "fromversion": "5.5.0",
+                "hours": 0,
+                "id": "Email Communication",
+                "name": "Email Communication",
+                "playbook": "",
+                "toversion": "",
+                "weeks": 0
+            }
+        ],
+        "layoutscontainer": [
+            {
+                "deprecated": false,
+                "description": "",
+                "fromversion": "6.0.0",
+                "group": "incident",
+                "id": "Email Communication",
+                "name": "Email Communication",
+                "toversion": ""
+            },
+            {
+                "deprecated": false,
+                "description": "",
+                "fromversion": "6.0.0",
+                "group": "incident",
+                "id": "Email Threads",
+                "name": "Email Threads",
+                "toversion": ""
+            }
+        ]
+    },
+    "contributors": [
+        "Mike Rizzo"
+    ],
+    "created": "2020-08-27T16:37:51Z",
+    "currentVersion": "2.0.34",
+    "defaultDataSource": null,
+    "dependencies": {
+        "Base": {
+            "author": "Cortex XSOAR",
+            "certification": "certified",
+            "mandatory": true,
+            "minVersion": "1.35.5",
+            "name": "Base"
+        },
+        "CommonTypes": {
+            "author": "Cortex XSOAR",
+            "certification": "certified",
+            "mandatory": true,
+            "minVersion": "3.6.0",
+            "name": "Common Types"
+        },
+        "DemistoRESTAPI": {
+            "author": "Cortex XSOAR",
+            "certification": "certified",
+            "mandatory": true,
+            "minVersion": "1.3.63",
+            "name": "Cortex REST API"
+        },
+        "FiltersAndTransformers": {
+            "author": "Cortex XSOAR",
+            "certification": "certified",
+            "mandatory": true,
+            "minVersion": "1.2.84",
+            "name": "Filters And Transformers"
+        },
+        "Gmail": {
+            "author": "Cortex XSOAR",
+            "certification": "certified",
+            "mandatory": false,
+            "minVersion": "1.3.28",
+            "name": "Gmail"
+        },
+        "GmailSingleUser": {
+            "author": "Cortex XSOAR",
+            "certification": "certified",
+            "mandatory": false,
+            "minVersion": "1.4.8",
+            "name": "Gmail Single User"
+        },
+        "MicrosoftExchangeOnPremise": {
+            "author": "Cortex XSOAR",
+            "certification": "certified",
+            "mandatory": false,
+            "minVersion": "2.1.15",
+            "name": "Microsoft Exchange On-Premise"
+        },
+        "MicrosoftExchangeOnline": {
+            "author": "Cortex XSOAR",
+            "certification": "certified",
+            "mandatory": false,
+            "minVersion": "1.5.17",
+            "name": "Microsoft Exchange Online"
+        },
+        "MicrosoftGraphMail": {
+            "author": "Cortex XSOAR",
+            "certification": "certified",
+            "mandatory": false,
+            "minVersion": "1.6.19",
+            "name": "Microsoft Graph Mail"
+        },
+        "Phishing": {
+            "author": "Cortex XSOAR",
+            "certification": "certified",
+            "mandatory": true,
+            "minVersion": "3.6.27",
+            "name": "Phishing"
+        }
+    },
+    "deprecated": false,
+    "description": "Do you have to send multiple emails to end users? This content pack helps you streamline the process and automate updates, notifications and more.\n",
+    "display_name": "Email Communication",
+    "downloads": 10432,
+    "eulaLink": "https://github.com/demisto/content/blob/master/LICENSE",
+    "excludedDependencies": [],
+    "git_sha": null,
+    "git_status": null,
+    "hidden": false,
+    "hybrid": false,
+    "id": "EmailCommunication",
+    "integrations": [
+        {
+            "name": "Core REST API",
+            "imagePath": "content/packs/DemistoRESTAPI/CoreRESTAPI_image.png"
+        },
+        {
+            "name": "Demisto REST API (Deprecated)",
+            "imagePath": "content/packs/DemistoRESTAPI/DemistoRESTAPI_image.png"
+        },
+        {
+            "name": "Microsoft Graph Mail Single User",
+            "imagePath": "content/packs/MicrosoftGraphMail/MicrosoftGraphMailSingleUser_image.png"
+        },
+        {
+            "name": "O365 Outlook Mail (Using Graph API)",
+            "imagePath": "content/packs/MicrosoftGraphMail/MicrosoftGraphMail_image.png"
+        },
+        {
+            "name": "EWS Extension Online Powershell v2",
+            "imagePath": "content/packs/MicrosoftExchangeOnline/EWSExtensionOnlinePowershellv2_image.png"
+        },
+        {
+            "name": "EWS Extension Online Powershell v2 (Deprecated)",
+            "imagePath": "content/packs/MicrosoftExchangeOnline/EWSExtensionOnlinePowershellv2_image.png"
+        },
+        {
+            "name": "EWS Extension Online Powershell v3",
+            "imagePath": "content/packs/MicrosoftExchangeOnline/EWSExtensionOnlinePowershellv3_image.png"
+        },
+        {
+            "name": "EWS O365",
+            "imagePath": "content/packs/MicrosoftExchangeOnline/EWSO365_image.png"
+        },
+        {
+            "name": "O365 - EWS - Extension",
+            "imagePath": "content/packs/MicrosoftExchangeOnline/EwsExtension_image.png"
+        },
+        {
+            "name": "O365 - EWS - Extension (Deprecated)",
+            "imagePath": "content/packs/MicrosoftExchangeOnline/EwsExtension_image.png"
+        },
+        {
+            "name": "O365 - Security And Compliance - Content Search",
+            "imagePath": "content/packs/MicrosoftExchangeOnline/SecurityAndCompliance_image.png"
+        },
+        {
+            "name": "O365 - Security And Compliance - Content Search (Deprecated)",
+            "imagePath": "content/packs/MicrosoftExchangeOnline/SecurityAndCompliance_image.png"
+        },
+        {
+            "name": "O365 - Security And Compliance - Content Search v2",
+            "imagePath": "content/packs/MicrosoftExchangeOnline/SecurityAndComplianceV2_image.png"
+        },
+        {
+            "name": "EWS Mail Sender",
+            "imagePath": "content/packs/MicrosoftExchangeOnPremise/EWSMailSender_image.png"
+        },
+        {
+            "name": "EWS Mail Sender (Deprecated)",
+            "imagePath": "content/packs/MicrosoftExchangeOnPremise/EWSMailSender_image.png"
+        },
+        {
+            "name": "EWS v2",
+            "imagePath": "content/packs/MicrosoftExchangeOnPremise/EWSv2_image.png"
+        },
+        {
+            "name": "Gmail",
+            "imagePath": "content/packs/Gmail/Gmail_image.png"
+        },
+        {
+            "name": "Gmail Single User",
+            "imagePath": "content/packs/GmailSingleUser/GmailSingleUser_image.png"
+        }
+    ],
+    "keywords": [],
+    "legacy": true,
+    "marketplaces": [
+        "xsoar",
+        "xsoar_saas"
+    ],
+    "modules": [],
+    "name": "Email Communication",
+    "old_base_content_object": null,
+    "price": 0,
+    "searchRank": 10,
+    "serverMinVersion": "5.0.0",
+    "source_repo": "content",
+    "support": "xsoar",
+    "supportDetails": {
+        "url": "https://www.paloaltonetworks.com/cortex"
+    },
+    "tags": [
+        "Use Case"
+    ],
+    "updated": "2024-11-25T10:45:41Z",
+    "useCases": [],
+    "versionInfo": "1699115",
+    "videos": [
+        "https://www.youtube.com/watch?v=-5YdMPyOz4w"
+    ]
+}

@@ -1,0 +1,305 @@
+{
+    "1.4.6": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Improved the script error handling.",
+        "displayName": "1.4.6 - 2745974",
+        "released": "2022-04-12T21:27:16Z"
+    },
+    "2.0.0": {
+        "releaseNotes": "#### Incident Fields\n- **Add BCC To Email**\n- **Email Selected Thread**\n- **Email New Attachment**\n- **Email Generated Codes**\n- **Email New Recipients**\n- **Email New Subject**\n- **Email New Body**\n\n#### Layouts\n##### New: Email Threads\n- This layout contains the 'Email Threads' tab which can be added to other layouts to add email threads functionality to the incident types where they are used.\n\n#### Scripts\n##### New: DisplayEmailHtmlThread\n- Dynamic-section script for 'Email Threads' layout.\nThis script renders all email messages with the thread number specified in the \"Email Selected Thread\" field and outputs them as a single HTML output.\n##### New: SummarizeEmailThreads\n- Dynamic-section script for 'Email Threads' layout.\nThis script searches for email threads stored in the Incident context and outputs a table summarizing them.\n##### SendEmailReply\n- Added functionality to support sending emails via the 'Email Threads' layout.\n##### PreprocessEmail\n- Added functionality to search for and apply incoming email to any incident type where the 'Email Threads' layout has been added. Email details will be added to that incident's context.",
+        "displayName": "2.0.0  -  R3156866",
+        "released": "2022-06-26T13:15:29Z",
+        "pullRequests": [
+            "19542",
+            "20443",
+            "17717"
+        ]
+    },
+    "2.0.1": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Updated the Docker image to: *demisto/python3:3.10.5.31928*.\n- Fixed an issue where the script would not update the war room entries unless the email sent had an attachment.",
+        "displayName": "2.0.1  -  R3281367",
+        "released": "2022-07-17T22:49:35Z",
+        "pullRequests": [
+            "20443",
+            "20014",
+            "19917"
+        ]
+    },
+    "2.0.2": {
+        "releaseNotes": "#### Scripts\n##### PreprocessEmail\n- Added functionality to support email attachments for *EWS O365* and *Gmail Single User* integrations.\n- Updated the Docker image to: *demisto/python3:3.10.5.31928*.",
+        "displayName": "2.0.2 - R3984540",
+        "released": "2022-11-06T23:06:38Z",
+        "pullRequests": [
+            "19873"
+        ]
+    },
+    "2.0.3": {
+        "releaseNotes": "#### Scripts\n##### PreprocessEmail\n- Updated the Docker image to: *demisto/python3:3.10.8.37753*.\n- Fixed an issue when parsing an email, with an attachment, via the **EmailCommunication** and **MicrosoftGraphMail** packs, the attachment wasn't handled correctly.",
+        "displayName": "2.0.3 - 4123091",
+        "released": "2022-11-30T00:19:29Z",
+        "pullRequests": [
+            "22514"
+        ]
+    },
+    "2.0.4": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Using **getIncidents** instead of **GetIncidentsByQuery**\n- Updated the Docker image to: *demisto/python3:3.10.9.45313*.\n\n##### PreprocessEmail\n- Using **getIncidents** instead of **GetIncidentsByQuery**\n- Updated the Docker image to: *demisto/python3:3.10.9.45313*.",
+        "displayName": "2.0.4 - R4718798",
+        "released": "2023-03-01T11:44:33Z",
+        "pullRequests": [
+            "23812"
+        ]
+    },
+    "2.0.5": {
+        "releaseNotes": "#### Scripts\n##### DisplayEmailHtmlThread\n- Updated the Docker image to: *demisto/python3:3.10.10.48392*.\n\n##### SendEmailReply\n- Updated the Docker image to: *demisto/python3:3.10.10.48392*.",
+        "displayName": "2.0.5  -  4751368",
+        "released": "2023-03-06T11:32:47Z",
+        "pullRequests": [
+            "25084",
+            "23716"
+        ]
+    },
+    "2.0.6": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Documentation and metadata improvements.",
+        "displayName": "2.0.6  -  R5170573",
+        "released": "2023-05-02T19:38:54Z",
+        "pullRequests": [
+            "26113",
+            "23716"
+        ]
+    },
+    "2.0.7": {
+        "releaseNotes": "#### Scripts\n##### PreprocessEmail\n- Fixed an issue where script failed when there is no *emailsubject* in the incident.\n- Updated the Docker image to: *demisto/python3:3.10.11.57293*.",
+        "displayName": "2.0.7  -  5210128",
+        "released": "2023-05-07T15:07:42Z",
+        "pullRequests": [
+            "26113",
+            "26361"
+        ]
+    },
+    "2.0.8": {
+        "releaseNotes": "#### Scripts\n##### PreprocessEmail\n- Fixed a library incompatibility by downgrading the Docker image to: *demisto/python3:3.10.9.45313*.",
+        "displayName": "2.0.8 - 5226855",
+        "released": "2023-05-09T19:24:59Z",
+        "pullRequests": [
+            "26405"
+        ]
+    },
+    "2.0.9": {
+        "releaseNotes": "#### Scripts\n##### SummarizeEmailThreads\nUpdated the Docker image to: *demisto/python3:3.10.11.58677*.\n\n##### DisplayEmailHtmlThread\nUpdated the Docker image to: *demisto/python3:3.10.11.58677*.\n\n##### SendEmailReply\n- Added the argument *subject_include_incident_id* that is used to decide whether to include the Incident ID within the email subject.\n- Updated the Docker image to: *demisto/python3:3.10.11.58677*.\n\n##### PreprocessEmail\n- Added the argument *CreateIncidentUntaggedEmail* to control whether to allow the creation of an email for which we can't find an existing incident.\n- Updated the Docker image to: *demisto/python3:3.10.11.58677*.\n\n##### DisplayEmailHtml\nUpdated the Docker image to: *demisto/python3:3.10.11.58677*.",
+        "displayName": "2.0.9 - R5692327",
+        "released": "2023-07-05T19:49:03Z",
+        "pullRequests": [
+            "26113"
+        ]
+    },
+    "2.0.10": {
+        "releaseNotes": "#### Scripts\n##### DisplayEmailHtmlThread\n- Updated the Docker image to: *demisto/python3:3.10.12.63474*.\n\n##### SendEmailReply\n- Updated the Docker image to: *demisto/python3:3.10.12.63474*.",
+        "displayName": "2.0.10 - 5708361",
+        "released": "2023-07-07T09:31:11Z",
+        "pullRequests": [
+            "27975"
+        ]
+    },
+    "2.0.11": {
+        "releaseNotes": "#### Scripts\n##### SummarizeEmailThreads\n- Updated the Docker image to: *demisto/python3:3.10.12.63474*.\n\n##### DisplayEmailHtml\n- Updated the Docker image to: *demisto/python3:3.10.12.63474*.\n\n##### PreprocessEmail\n- Updated the Docker image to: *demisto/python3:3.10.12.63474*.",
+        "displayName": "2.0.11 - 5750551",
+        "released": "2023-07-12T19:31:08Z",
+        "pullRequests": [
+            "28102"
+        ]
+    },
+    "2.0.12": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Added support for the *reputation_calc_async* parameter, to prevent timeouts.\n- Updated the Docker image to: *demisto/python3:3.10.12.68300*.\n\n##### PreprocessEmail\n- Added support for the *reputation_calc_async* parameter, to prevent timeouts.\n- Updated the Docker image to: *demisto/python3:3.10.12.68300*.",
+        "displayName": "2.0.12 - 6010750",
+        "released": "2023-08-10T11:46:09Z",
+        "pullRequests": [
+            "28658"
+        ]
+    },
+    "2.0.13": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Updated the Docker image to: *demisto/python3:3.10.13.78960*.",
+        "displayName": "2.0.13 - 6683114",
+        "released": "2023-10-23T19:26:05Z",
+        "pullRequests": [
+            "30346"
+        ]
+    },
+    "2.0.14": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Updated the **SendEmailReply** script to include a references header when using the **Gmail Single User integration**. This allows email replies sent using this automation to group into conversations in the end user's Gmail inbox.\n- Updated the Docker image to: *demisto/python3:3.10.13.80014*.",
+        "displayName": "2.0.14 - 6899385",
+        "released": "2023-11-15T20:31:17Z",
+        "pullRequests": [
+            "30788",
+            "30922"
+        ]
+    },
+    "2.0.15": {
+        "releaseNotes": "#### Scripts\n##### PreprocessEmail\n- Added the ability to get attachments during preprocessing email for **Microsoft Graph Mail Single User** integration.\n- Updated the Docker image to: *demisto/python3:3.10.13.80593*.",
+        "displayName": "2.0.15 - 6996984",
+        "released": "2023-11-27T10:23:36Z",
+        "pullRequests": [
+            "30967"
+        ]
+    },
+    "2.0.16": {
+        "releaseNotes": "#### Mappers\n##### MS Graph Mail Single User - Incoming Mapper - Email Communication\n- Fixed an issue where in some cases multiple **Email To**, **Email CC**, and **Email BCC** values was processed as an array of values.\n\n##### EWS - Incoming Mapper - Email Communication\n- Fixed an issue where in some cases multiple **Email BCC** values was processed as an array of values.\n\n##### MS Graph Mail - Incoming Mapper - Email Communication\n- Fixed an issue where in some cases multiple **Email To**, **Email CC**, and **Email BCC** values was processed as an array of values.\n\n##### Gmail - Incoming Mapper - Email Communication\n- Fixed an issue where in some cases multiple **Email To**, **Email CC**, and **Email BCC** values was processed as an array of values.\n\n#### Scripts\n##### SendEmailReply\n**NOTE**: The automation will now throw an error and exit when failing to send mail.\n- Updated the Docker image to: *demisto/python3:3.10.13.83255*.",
+        "displayName": "2.0.16 - 7187156",
+        "released": "2023-12-17T10:23:39Z",
+        "pullRequests": [
+            "31481"
+        ],
+        "breakingChanges": true,
+        "breakingChangesNotes": "The automation will now throw an error and exit when failing to send mail."
+    },
+    "2.0.17": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Deprecated the ***demisto-api-**** commands and replaced with the ***core-api-**** commands. (Commands are identical, no effect is expected.)",
+        "displayName": "2.0.17 - 7216131",
+        "released": "2023-12-20T10:26:37Z",
+        "pullRequests": [
+            "31388"
+        ],
+        "breakingChanges": true,
+        "breakingChangesNotes": "The Demisto REST API integration has been deprecated. Use the Core REST API integration in its place. The functionalities are the same."
+    },
+    "2.0.18": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Added support for bodyType when executing `send-mail` command.\n- Updated the Docker image to: *demisto/python3:3.10.13.83255*.",
+        "displayName": "2.0.18 - 7232090",
+        "released": "2023-12-21T21:24:00Z",
+        "pullRequests": [
+            "31298"
+        ]
+    },
+    "2.0.19": {
+        "releaseNotes": "#### Scripts\n##### DisplayEmailHtmlThread\n- Updated the Docker image to: *demisto/python3:3.10.13.83255*.",
+        "displayName": "2.0.19 - 722180",
+        "released": "2023-12-28T10:26:49Z",
+        "pullRequests": [
+            "31812"
+        ]
+    },
+    "2.0.20": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Fixed an issue where the bodyType argument was missing from the SendEmailReply script.\n- Updated the Docker image to: *demisto/python3:3.10.13.84405*.",
+        "displayName": "2.0.20 - 756127",
+        "released": "2024-01-11T10:23:10Z",
+        "pullRequests": [
+            "32117"
+        ]
+    },
+    "2.0.21": {
+        "releaseNotes": "#### Scripts\n##### DisplayEmailHtmlThread\n- Updated how the script renders HTML messages.\n- Updated the Docker image to: *demisto/btfl-soup:1.0.1.84814*.",
+        "displayName": "2.0.21 - 766592",
+        "released": "2024-01-16T20:22:19Z",
+        "pullRequests": [
+            "32060"
+        ]
+    },
+    "2.0.22": {
+        "releaseNotes": "#### Scripts\n##### SummarizeEmailThreads\n- Updated the Docker image to: *demisto/python3:3.10.13.86272*.",
+        "displayName": "2.0.22 - 793334",
+        "released": "2024-01-30T10:41:58Z",
+        "pullRequests": [
+            "32408"
+        ]
+    },
+    "2.0.23": {
+        "releaseNotes": "#### Scripts\n##### DisplayEmailHtml\n- Updated the Docker image to: *demisto/python3:3.10.13.86272*.",
+        "displayName": "2.0.23 - 798475",
+        "released": "2024-02-01T10:32:24Z",
+        "pullRequests": [
+            "32445"
+        ]
+    },
+    "2.0.24": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Fixed an issue with rendering Markdown in the email body to HTML.\n- Fixed an issue with the `body_type` argument missing from the documentation.\n- Fixed an issue with the `reputation_calc_async` argument not being used.\n- Updated the Docker image to: *demisto/bs4-py3:1.0.0.86348*.",
+        "displayName": "2.0.24 - R828628",
+        "released": "2024-02-14T20:24:00Z",
+        "pullRequests": [
+            "32558"
+        ]
+    },
+    "2.0.25": {
+        "releaseNotes": "#### Scripts\n##### DisplayEmailHtmlThread\n- Updated the Docker image to: *demisto/btfl-soup:1.0.1.87353*.",
+        "displayName": "2.0.25 - 839519",
+        "released": "2024-02-20T10:30:55Z",
+        "pullRequests": [
+            "33010"
+        ]
+    },
+    "2.0.26": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Fixed an issue where the unique code generation isn't fast enough, causing collisions, and causing the script to fail on timeout.\n- Updated the Docker image to: *demisto/bs4-py3:1.0.0.88847*.",
+        "displayName": "2.0.26 - R931860",
+        "released": "2024-04-03T10:20:04Z",
+        "pullRequests": [
+            "32824"
+        ]
+    },
+    "2.0.27": {
+        "releaseNotes": "#### Scripts\n##### PreprocessEmail\n- Fixed an issue where inline image attachments were not handled correctly by added description field to attachments to distinguish file attachments from inline images.\n- Updated the Docker image to: *demisto/python3:3.10.14.91134*.",
+        "displayName": "2.0.27 - 940291",
+        "released": "2024-04-07T19:23:11Z",
+        "pullRequests": [
+            "33651"
+        ]
+    },
+    "2.0.28": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Updated the send-mail, reply-mail, get-attachments, fetch-incidents to handle inline image from xsoar and to xsoar.\n- Updated the Docker image to: *demisto/bs4-py3:1.0.0.98602*.\n##### PreprocessEmail\n- Updated the send-mail, reply-mail, get-attachments, fetch-incidents to handle inline image from xsoar and to xsoar.\n- Updated the Docker image to: *demisto/python3:3.10.14.98471*.",
+        "displayName": "2.0.28 - 1122733",
+        "released": "2024-06-25T19:19:19Z",
+        "pullRequests": [
+            "34116"
+        ]
+    },
+    "2.0.29": {
+        "releaseNotes": "#### Scripts\n##### PreprocessEmail\n- Updated the preprocess script to handle attachments in the following format: <the attachment ID\\>-attachmentName-<the attachment name\\>.",
+        "displayName": "2.0.29 - 1191003",
+        "released": "2024-07-18T17:45:06Z",
+        "pullRequests": [
+            "35321"
+        ],
+        "breakingChanges": true,
+        "breakingChangesNotes": "From version 2.0.28 the preprocess script is updated to handle image in the following format: <the attachment ID>-attachmentName-<the attachment name>."
+    },
+    "2.0.30": {
+        "releaseNotes": "#### Scripts\n##### PreprocessEmail\nUpdated the script to handle both attachments names in the original format (e.g., image.png) and in the new format <Attachment-ID\\>-attachmentName-<Attachment-name\\> (e.g., 123-attachmentName-image.png).",
+        "displayName": "2.0.30 - 1223816",
+        "released": "2024-07-30T09:28:58Z",
+        "pullRequests": [
+            "35520"
+        ]
+    },
+    "2.0.31": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Fixed an issue where the \"RE:\" prefix was not removed correctly from the email subject.",
+        "displayName": "2.0.31 - 1300648",
+        "released": "2024-08-22T19:26:54Z",
+        "pullRequests": [
+            "35884"
+        ]
+    },
+    "2.0.32": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Fixed an issue where an attachment supplied as inline text in XSOAR SaaS was parsed incorrectly, resulting in improper image display.\n- Updated the Docker image to: *demisto/bs4-py3:1.0.0.111952*.",
+        "displayName": "2.0.32 - 1398165",
+        "released": "2024-09-17T19:28:37Z",
+        "pullRequests": [
+            "36366"
+        ]
+    },
+    "2.0.33": {
+        "releaseNotes": "#### Scripts\n##### DisplayEmailHtmlThread\n- Updated the Docker image to: *demisto/btfl-soup:1.0.1.115405*.",
+        "displayName": "2.0.33 - 1621428",
+        "released": "2024-11-11T10:31:43Z",
+        "pullRequests": [
+            "37124",
+            "37111"
+        ]
+    },
+    "2.0.34": {
+        "releaseNotes": "#### Scripts\n##### SendEmailReply\n- Updated the Docker image to: *demisto/bs4-py3:1.0.0.117152*.",
+        "displayName": "2.0.34 - 1699115",
+        "released": "2024-11-25T10:45:41Z",
+        "pullRequests": [
+            "37378",
+            "37355",
+            "37356",
+            "37357"
+        ]
+    }
+}
