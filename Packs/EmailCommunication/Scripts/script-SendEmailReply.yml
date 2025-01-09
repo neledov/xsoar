@@ -6,7 +6,7 @@ args:
 - defaultValue: ${incident.attachment}
   description: Attachment.
   isArray: true
-  name: attachment
+  name: attachments
 - description: The mailbox from which emails are sent from the 3rd party integration.
   name: service_mail
 - name: mail_sender_instance
