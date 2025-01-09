@@ -1,0 +1,103 @@
+<h1>Understanding demisto-sdk Validation Behavior with Git References</h1>
+
+<h2>Summary</h2>
+<p>The <code>demisto-sdk</code> validation process requires Git references to accurately compare content changes against the <code>main</code> branch. This behavior is enforced by the validation manager, which relies on a valid Git context for proper operation. Specifically, the <code>demisto-sdk pre-commit validate -g --prev-version main</code> command triggers this behavior.</p>
+
+<h2>Symptom</h2>
+<p>Running <code>demisto-sdk pre-commit validate -g --prev-version main</code> on a local-only branch results in a <code>BA102</code> error. This indicates that the validation process cannot proceed without remote tracking references.</p>
+
+<h2>Cause</h2>
+<p>The validation logic in <code>demisto_sdk/commands/validate/old_validate_manager.py</code> mandates Git references for several key operations:</p>
+<ul>
+    <li>
+        <h3>Tracking Modified Files</h3>
+        <p>The <code>get_modified_and_added_files()</code> method (lines 50-54) uses Git to identify changed files.</p>
+        <pre><code>
+        # demisto_sdk/commands/validate/old_validate_manager.py
+        def get_modified_and_added_files(self):
+            changed_files = self.get_changed_files_from_git()
+            modified_files, added_files, old_format_files = filter_changed_files(changed_files)
+        </code></pre>
+    </li>
+    <li>
+        <h3>Comparing Against <code>main</code></h3>
+        <p>The <code>get_changed_files_from_git()</code> method (lines 60-64) fetches changes relative to the <code>main</code> branch.</p>
+        <pre><code>
+        # demisto_sdk/commands/validate/old_validate_manager.py
+        def get_changed_files_from_git(self):
+            prev_ver = "main"
+            changed_files = get_changed_files(prev_ver)
+        </code></pre>
+    </li>
+    <li>
+        <h3>Validating Pack Versions</h3>
+        <p>The validation process also uses Git references to determine if pack versions need to be raised, which is part of the overall content validation.</p>
+    </li>
+</ul>
+
+<h2>Resolution (Expected Behavior)</h2>
+<p>Here's how to reproduce and verify the expected behavior:</p>
+<ol>
+    <li>
+        <h3>Check Current References</h3>
+        <pre><code>git show-ref</code></pre>
+        <p>Expected Output: Shows local branches under <code>refs/heads/*</code> and remote tracking branches under <code>refs/remotes/origin/*</code>.</p>
+    </li>
+    <li>
+        <h3>Create Test Branch</h3>
+        <pre><code>git checkout -b test/validation</code></pre>
+    </li>
+    <li>
+        <h3>Verify Validation Requirement</h3>
+        <pre><code>demisto-sdk pre-commit validate -g --prev-version main</code></pre>
+        <p>Expected Output: <code>BA102</code> error, indicating the need for remote references.</p>
+    </li>
+    <li>
+        <h3>Create Remote Reference</h3>
+        <pre><code>git push origin test/validation</code></pre>
+        <p>Creates: <code>refs/remotes/origin/test/validation</code></p>
+    </li>
+    <li>
+        <h3>Validation Passes with Remote Reference</h3>
+        <pre><code>demisto-sdk pre-commit validate -g --prev-version main</code></pre>
+        <p>Expected Output: Validation passes successfully.</p>
+    </li>
+</ol>
+<p>This behavior is enforced by the <code>run_validation_using_git()</code> method (lines 40-45) in <code>demisto_sdk/commands/validate/old_validate_manager.py</code>, which checks for a valid Git context before proceeding with validation.</p>
+<pre><code>
+# demisto_sdk/commands/validate/old_validate_manager.py
+def run_validation_using_git(self):
+    validation_results = set()
+    modified_files, added_files, old_format_files = self.get_modified_and_added_files()
+    changed_meta_files = get_changed_meta_files(modified_files)
+    if not self._has_valid_git_context():
+        return BA102_ERROR
+</code></pre>
+
+<h2>Technical Reference</h2>
+<p>Key code paths in <code>demisto-sdk</code>:</p>
+<ul>
+    <li><code>demisto_sdk/commands/validate/old_validate_manager.py</code>:
+        <ul>
+            <li><code>get_modified_and_added_files()</code> method (lines 50-54)</li>
+            <li><code>get_changed_files_from_git()</code> method (lines 60-64)</li>
+            <li><code>run_validation_using_git()</code> method (lines 40-45)</li>
+        </ul>
+    </li>
+    <li><code>demisto_sdk/commands/validate/validators/base_validator.py</code>:
+        <ul>
+             <li><code>should_run_validation()</code> method (lines 40-45)</li>
+        </ul>
+    </li>
+    <li><code>demisto_sdk/commands/validate/file_validator.py</code>:
+        <ul>
+            <li><code>is_file_valid()</code> method (lines 102-110)</li>
+        </ul>
+    </li>
+    <li><code>demisto_sdk/commands/common/constants.py</code>:
+        <ul>
+            <li><code>BA102_ERROR</code> constant (line 245)</li>
+        </ul>
+    </li>
+</ul>
+<p>These components work together to ensure proper content validation against the <code>main</code> branch using Git references. The code explicitly checks for a valid Git context before proceeding with validation, resulting in the <code>BA102</code> error when remote references are missing.</p>
