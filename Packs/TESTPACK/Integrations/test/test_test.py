@@ -7,7 +7,7 @@ More details: https://xsoar.pan.dev/docs/integrations/unit-testing
 MAKE SURE YOU REVIEW/REPLACE ALL THE COMMENTS MARKED AS "TODO"
 
 You must add at least a Unit Test function for every XSOAR command
-you are implementing with your integration
+you are implementing with your integrations
 """
 
 import json
