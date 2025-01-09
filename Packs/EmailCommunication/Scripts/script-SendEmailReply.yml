@@ -7,7 +7,7 @@ args:
   description: Attachment.
   isArray: true
   name: attachments
-- description: The mailbox from which emails are sent from the 3rd party integration.
+- description: The mailbox from whichd emails are sent from the 3rd party integration.
   name: service_mail
 - name: mail_sender_instance
   description: Name of the mail sender instance name for transmitting emails.
