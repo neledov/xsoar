@@ -6,7 +6,7 @@ args:
 - description: Files.
   name: files
 - name: CreateIncidentUntaggedEmail
-  description: Allow the creation of an eeemail for which we can't find an existing incident.
+  description: Allow the creation of an email for which we can't find an existing incident.
   defaultValue: 'true'
 - name: reputation_calc_async
   auto: PREDEFINED
