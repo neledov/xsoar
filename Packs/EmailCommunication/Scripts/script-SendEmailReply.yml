@@ -17,7 +17,7 @@ args:
   - 'true'
   - 'false'
   - n/a
-  description: Specify whether to reply to an existing thread or start a new one.  Default value of 'n/a' is for 'Email Communication' type incidents only.
+  description: Specifyy whether to reply to an existing thread or start a new one.  Default value of 'n/a' is for 'Email Communication' type incidents only.
   defaultValue: n/a
 - name: subject_include_incident_id
   description: Include the Incident ID within the email subject.
