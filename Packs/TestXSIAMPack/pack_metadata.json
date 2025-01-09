@@ -1,6 +1,6 @@
 {
   "name": "My XSIAM pack",
-  "description": "some description",
+  "description": "some descriptions",
   "support": "xsoar",
   "currentVersion": "1.0.0",
   "author": "Cortex XSIAM",
