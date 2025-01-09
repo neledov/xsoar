@@ -1,60 +1,451 @@
-[tool.poetry]
-name = "content"
-version = "0.1.0"
-description = "Cortex XSOAR content"
-authors = ["Cortex XSOAR"]
-license = "MIT"
+# This list contains all ignorable errors for all sections
+ignorable_errors = [
+    "BA101", # Validate that the file id and name fields are identical.
+    "BA105", # Validate that the content item ID doesn't include any slashes (/).
+    "BA106", # Validate that the item's fromversion field is sufficient.
+    "BA116", # Validate that the CLI name and the id match for incident and indicators field
+    "BA118", # Validate that the item's toversion is greater/equal then its fromversion.
+    "BC111", # Ensure that no new *required* arguments are added to an existing script.
+    "DO104", # Validate that the given content item has a docker_image.
+    "IN108", # Validate wether the subtype is valid or not.
+    "IN130", # validate that the integration is runable
+    "PA107", # Ensure that mandatory fields exist in the pack_metadata.
+    "PA108", # Validate that the pack name field exist and is different from the default one.
+    "PA111", # Validate that certain metadata fields are not empty.
+    "PA115", # Validate that the pack_metadata created field is in ISO format.
+    "PA128", # Checks for required pack files
+    "PA130", # Validate that the pack_metadata version field is in valid format.
+    "RP101", # Validate that the 'expiration' field has a non-negative integer value.
+]
 
-[tool.poetry.dependencies]
-python = "^3.8,<3.11"
+[use_git]
+# This is the current list of ALL validtions
+select = [
+    "BA100", # Marketplace content set to -1 makes it easier to tell from modified, versioned content.
+    "BA101", # Validate that the file id and name fields are identical.
+    "BA105", # Validate that the content item ID doesn't include any slashes (/).
+    "BA106", # Validate that the item's fromversion field is sufficient.
+    "BA108", # Check if there are separators in the folder name.
+    "BA109", # Check if there are separators in the script or integration files names.
+    "BA110", # Check that the entity name or display name does not contain the entity type.
+    "BA111", # Checks whether the name of a content item contains an excluded word.
+    "BA113", # Checks for content item names with trailing spaces.
+    "BA114", # Validate that we didn't move a content item from one pack to another.
+    "BA116", # validate that the CLI name and the id match for incident and indicators field
+    "BA118", # Validate that the item's toversion is greater/equal then its fromversion.
+    "BA119", # Validate that the python file doesn't have a copyright section with the words - BSD, MIT, Copyright, proprietary.
+    "BA124", # Validate that the script / integration has a unit test file.
+    "BA125", # Validate that customer facing docs and fields don't contain any internal terms that aren't clear for customers.
+    "BA126", # Checks if script/integration is deprecated correctly
+    "BA127", # Validate that the level of depth of the context output path in the yml is lower or equal to 5.
+    "BC100", # Validate that the pack name subtype of the new file matches the old one.
+    "BC101", # Validate that no context output keys were removed from the script's output section.
+    "BC102", # Validate that the context path has been changed.
+    "BC103", # Check if an argument name has been changed.
+    "BC104", # Check if the command name or argument name has been changed.
+    "BC105", # Validate that the ID of the content item was not changed.
+    "BC106", # Check that the fromversion property was not changed on existing Content files.
+    "BC107", # Check that the toversion property was not changed on existing Content files.
+    "BC108", # Ensuring that the 'marketplaces' property hasn't been removed or added in a manner that effectively removes all others.
+    "BC110", # Validate that no new *required* argument are added to an existing command.
+    "BC111", # Ensure that no new *required* arguments are added to an existing script.
+    "BC112", # Ensure that no parameters are removed from an existing integration.
+    "BC113", # Validate that no incident types were removed and no incident fields were changed.
+    "BC114", # Ensure a pre-defined list of fields wasn't removed or modified in the integration yml.
+    "CL100", # Validate that a classifier has a type = classification field.
+    "CR102", # Validates 'search_window' existence and non-emptiness for 'execution_mode' = 'SCHEDULED'.
+    "DA100", # Validate that the dashboard excludes all the unnecessary fields.
+    "DA101", # Validate that the dashboard includes all the necessary fields.
+    "DO100", # Validate that the given content-item does not use the tag 'latest' in its docker image
+    "DO101", # Validate that the given content-item uses demisto docker image
+    "DO102", # Validate that the given content item uses a docker image that is not the native image.
+    "DO103", # Validate that the given content item's docker-image actually exists in dockerhub
+    "DO104", # Validate that the given content item has a docker_image.
+    # We don't case about deprecated docker images at this point
+    # "DO105", # Validate that the given content item uses a docker image that is not deprecated
+    "DO106", # Validate that the given content-item's docker image isn't outdated.
+    "DS100", # Check whether a description file exists for a beta integration.
+    "DS101", # Check if beta disclaimer exists in detailed description
+    "DS104", # Verifies that a Description file is present for an integration.
+    "DS105", # check if DESCRIPTION file contains contribution details.
+    "DS106", # Check if the description file exist and the name is valid.
+    "DS107", # Validate that none of the description lines contains the the word 'demisto'.
+    "DS108", # Ensure that all yml's description fields ends with a dot.
+    "GF100", # Checks if group field is set to 4.
+    "GF101", # Checks if the id starts with `generic_`.
+    "GF102", # Checks if the unsearchable key is set to true
+    # "GR100", # Detect content items that attempt to use other content items which are not supported in all of the marketplaces of the content item.
+    # "GR101", # Validates that source's fromversion &gt;= target's fromversion.
+    # "GR102", # Validates that content items are not used in other content items which have a lower toversion.
+    # "GR103", # Validates that there is no usage of unknown content items
+    # "GR104", # Validate that there are no duplicate display names of packs in the repo
+    # "GR105", # Ensures that each content item has a unique ID to prevent conflicts.
+    # "GR106", # Checks that every test playbook is linked to at least one content item. (the content item has a 'tests:' key with the ID of the test playbook)
+    # "GR107", # Validates that deprecated content items are not used in other content items.
+    # "GR108", # Validates that non-hidden packs do not have a hidden packs as mandatory dependencies.
+    "IF100", # Checks if the name and cliName do not contain potential incident synonyms.
+    "IF101", # Checks if the incident field is marked as content.
+    "IF102", # Checks if system flag is false.
+    "IF103", # Checks if given field type is valid.
+    "IF104", # Checks if group field is set to 0.
+    "IF105", # Checks if cliName field is alphanumeric and lowercase.
+    "IF106", # Checks if `cliName` field is not a reserved word.
+    "IF111", # Checks if the field type changed.
+    "IF113", # Checks if field name starts with its pack name or one of the item prefixes from pack metadata.
+    "IF115", # Checks if the `unsearchable` key set to true.
+    "IF116", # We do not allow for incidentFields with multySelect types to have in the selectValues emtpy options
+    "IF119", # We do not allow for incidentFields with singleSelect types to have in the selectValues more than one or only emtpy option
+    "IM100", # Checks if the integration has an image path.
+    "IM101", # Checks that the image file size are matching the requirements.
+    "IM106", # Checks if the integration has an image other than the default ones.
+    "IM108", # Checks that the author image file is not empty
+    "IM109", # Checks if the pack has an author image path.
+    "IM111", # Checks that the image file dimensions are matching the requirements.
+    "IN100", # Validate that the proxy & insecure params are configured correctly.
+    "IN101", # Outputs of reputation commands must adhere to standards.
+    "IN102", # Validate that the checkbox param is configured correctly with required argument set to false.
+    "IN104", # Validate that the Integrations category is valid.
+    "IN106", # Validate that the command is valid as a reputation command.
+    "IN107", # Validate that the reputation commands include the list of required contextPaths.
+    "IN108", # Validate wether the subtype is valid or not.
+    "IN109", # Validate that the ID field doesn't include the substring 'beta'.
+    "IN110", # Validate that the name field doesn't include the substring 'beta'.
+    "IN112", # Validate that the display name contain the substring 'beta'.
+    "IN113", # Prevent duplicate arguments for integrations.
+    "IN114", # Validate that there're no duplicated params for the integration.
+    "IN115", # Validate that the contextPath field of each output is in the right format.
+    "IN117", # Validate that type 17 configuration params doesn't include the display field.
+    "IN118", # Validate that the integration parameter has a display field if it's not of type 17.
+    "IN121", # Validate that fetch integration has the required params in the right format.
+    "IN122", # Validate that all existing params are in the right format for feed params.
+    "IN123", # Checks if integration display name is versioned correctly, e.g.: ends with v&lt;number&gt;.
+    "IN124", # Validate that a param is not hidden if it can not be hidden.
+    "IN125", # Validate that the max_fetch param has a defaultvalue
+    "IN126", # Validate that a fetch integration is not missing the first_fetch & max_fetch params.
+    "IN127", # Validate that a deprecated integration display name ends with (Deprecated).
+    "IN130", # validate that the integration is runable
+    "IN131", # Validate that the integration is valid as a mappable integration.
+    "IN134", # Checks whether a content item has multiple default arguments.
+    "IN135", # Validate that the parameter display name starts with a capital letter and doesn't contain '_'.
+    "IN139", # Validate that there's no 'incident' in any of the commands names or arguments names for core packs integrations.
+    "IN141", # Validate that an endpoint command has at least one of the required fields.
+    "IN142", # Validate that the integration contain the right additionalinfo fields for the list of params with predefined additionalinfo.
+    "IN144", # Validate that a reputation command has isArray field set to True for its default argument.
+    "IN145", # Validate that xsoar supported integrations don't have a non-hidden type 4 params.
+    "IN146", # Validate that there's no fromlicense param field in non Xsoar supported integration
+    "IN149", # Validate that a contextPath has a description if it belongs to a predefined list of contextPaths that should have a description.
+    "IN151", # Validate that all commands has at least one argument
+    "IN152", # Validate that the default value of a checkbox param is valid.
+    "IN153", # Validate that that the url default param starts with https rather than http.
+    "IN154", # Validate that feed integration and integrations with reputation commands have a reliability param.
+    "IN156", # Validate that the hidden field value contain only valid values.
+    "IN158", # Validate that the description for non-deprecated integrations is not in the deprecation format
+    "IN159", # Validate that the capitalization of reputation command specific keys is correct.
+    "IN160", # Validate that the display name for non-deprecated integration doesn't end with '(Deprecated)'.
+    "IN161", # Validate that the marketplacev2 tag appear in the marketplaces list of a siem integration.
+    "IN162", # Validate that the support level header for a collector integration in a Partner pack is set to Xsoar.
+    "IN163", # Validate feedExpirationPolicy parameter is in the right formatfor both incremental and fully fetched feeds
+    "IT100", # Checks if the included fields have a positive integer value.
+    "IT101", # Checks if playbook ID is valid.
+    "IT102", # Check if extractSettings field is valid.
+    "IT103", # Check if auto extract mode valid.
+    "LO107", # Ensures that only supported types are used in the layout for XSIAM compatibility.
+    "MR100", # Validate that each modeling rule has a corresponding schema file.
+    "MR101", # Validate that the modeling rules keys - "rules" and "schema" exist and are empty
+    "MR106", # Verifies that each specified data type in the schema files of modeling rules conforms to a predefined set of acceptable types.
+    "MR107", # Validate that the dataset name of a modeling rule shows in the xif and schema files match.
+    "MR108", # Checks that id and name in the modeling rule, end with the correct suffixes.
+    "PA100", # Validate that all the tags in tags field have a valid prefix.
+    "PA101", # Validate that the version mentioned in the Pack metadata matches the latest RN version.
+    "PA102", # Validate that the pack is deprecated if it needs to.
+    # "PA103", # Validate that the pack categories are valid.
+    "PA104", # Validate that the modules field include only labels from the list of allowed labels.
+    "PA105", # Validate that the pack has the marketplacev2 label if it include modules.
+    "PA107", # Ensure that mandatory fields exist in the pack_metadata.
+    "PA108", # Validate that the pack name field exist and is different from the default one.
+    "PA109", # Validate that the metadata description field isn't empty and is different from the default one.
+    "PA111", # Validate that certain metadata fields are not empty.
+    "PA113", # Validate that a partner/developer pack has at least an email or a url address fields filled.
+    "PA114", # Ensure that the pack metadata version is raised on relevant changes.
+    "PA115", # Validate that the pack_metadata created field is in ISO format.
+    "PA117", # Validate that the pack's support type is a valid support type.
+    "PA118", # Validate that the metadata's certification field is valid.
+    "PA119", # Validate that the metadata's usecases field include valid usecases.
+    "PA120", # Validate that metadata's tag section include only approved tags.
+    "PA121", # Validate that no changes were done to the pack's price.
+    "PA123", # Validate that the pack has at least one of PB, incidents Types or Layouts if the tags section contains the 'Use Case' tag.
+    "PA124", # Validates that core packs do not depend on non-core packs.
+    "PA125", # Validate that the pack name is valid.
+    "PA127", # Validate that the pack metadata contains a valid URL field.
+    "PA128", # Checks for required pack files
+    "PA130", # Validate that the pack_metadata version field is in valid format.
+    "PA131", # Validate that the pack_metadata contains a default datasource, if there are more than one datasource.
+    "PA132", # Validate that the pack_metadata contains a valid default datasource, when provided.
+    "PB100", # Validate whether the playbook has a rolename. If the Playbook has a rolename it is not valid.
+    "PB101", # Checks whether an ask conditional has task with unreachable next task condition.
+    "PB103", # Validate whether there is an unconnected task.
+    "PB104", # Validate whether a deprecated playbook has a valid description.
+    "PB105", # Validate whether the playbook has a DeleteContext with all set to 'Yes'. If the Playbook has it, it is not valid.
+    "PB106", # Validate whether the playbook does not use an instance. If the Playbook use an instance it is not valid.
+    "PB108", # Validate that the task ID and the 'id' under the 'task' field are from UUID format.
+    "PB109", # Check that taskid field and id field under task field contains equal values.
+    "PB114", # Validates that playbooks for indicator types will be on quiet mode.
+    "PB115", # Checks if the 'quietmode' field of all tasks in playbook are not in default value.
+    "PB116", # The validation checks that all playbook tasks stop when encountering an error.
+    "PB118", # Validate that all inputs described in the playbooks input section are used in tasks.
+    "PB119", # Validates that all inputs used are defined.
+    "PB122", # Validate whether branches of built-in conditional tasks are handled properly.
+    "PB123", # Checks whether an ask conditional has unhandled reply options.
+    "PB124", # Make sure that all conditional tasks contains at least 2 next tasks.
+    "PB125", # Validates that a condition task doesn't has only a default next-task.
+    "PB126", # Ensure that conditional tasks have an execution path besides for the default.
+    "PB127", # Ensure that any yml keys that are marketplace only have a default non-marketplace counterpart.
+    "PR101", # Checks that id and name in the parsing rule, end with the correct suffixes.
+    "RM100", # Check that there are no default leftovers such as:.     1. 'FILL IN REQUIRED PERMISSIONS HERE'..     2. unexplicit version number - such as "version xx of"..     3. Default description belonging to one of the examples integrations`
+    "RM101", # Validate images absolute paths, and prints the suggested path if it's not valid.
+    "RM102", # Validates that all context outputs defined in the README file are present in the YML file, and vice versa.
+    "RM104", # Validate that the pack contains a full README.md file with pack information.
+    "RM105", # Checks if the README.md file is not same as the pack description.
+    "RM106", # Validate that none of the readme lines contains the the word 'demisto'.
+    "RM107", # Checks if there are the generic sentence '%%FILL HERE%%' in the README content.
+    "RM108", # This validation verifies that images in the readme and description files are relative and stored in doc_files.
+    "RM109", # Validates if there is a readme file for the content item.
+    "RM110", # Validates that all commands are mentioned in the README file
+    "RM113", # Validate that non of the readme lines contains the disallowed copyright section keywords.
+    "RM114", # Validate that images placed under doc_files folder and used in README exist.
+    "RM115", # Check that there are no default leftovers such as:.     1. 'FILL IN REQUIRED PERMISSIONS HERE'..     2. unexplicit version number - such as "version xx of"..     3. Default description belonging to one of the examples integrations
+    "RM116", # Validate that the readme file is not to short
+    "RN103", # Validate that the pack contains a full release note file.
+    "RN105", # Validate there're no more than one Added rn for each pack.
+    "RN108", # Validate that a new pack doesn't have a RN,
+    "RN112", # Validate that if RN contains 'breaking change' then the breaking change release note exist and filled correctly.
+    "RN114", # Validate the existence of content types in the first-level headers (####) and the content items in second-level headers (#####).
+    "RN116", # Validate that the release note has either a valid first level header or a valid force header.
+    "RP101", # Validate that the 'expiration' field has a non-negative integer value.
+    "RP102", # Validate that the id and the details fields are equal.
+    "RP103", # Validate that the 'id' field of indicator type has valid value.
+    "SC100", # Checks if script name is versioned correctly, e.g.: ends with V&lt;number&gt;.
+    "SC105", # Checks that script arguments do not container the word incident in core packs
+    "SC106", # Checks that the script runas is not equal to DBotRole
+    # This validator leads to every docker image defined in the content repo being checked for availablirty. So we disable it ;)
+    # "SC109", # Validate that there are no scripts with the same type and the same name.
+    "ST110", # Validate that the scheme's structure is valid.
+]
 
-[tool.poetry.group.dev.dependencies]
-demisto-sdk = {git = "https://github.com/demisto/demisto-sdk.git", rev = "c6213ce7f4fe4f92a249de9cf425e6c59d2c6fb6"}
-requests = "^2.22.0"
-pre-commit = "^2.20.0"
+warning = []
 
-[tool.poetry.group.linters.dependencies]
-mypy = "^0.982"
-flake8 = "^4.0.1"
+[path_based_validations]
+# This is the current list of ALL validtions
+select = [
+    "BA100", # Marketplace content set to -1 makes it easier to tell from modified, versioned content.
+    "BA101", # Validate that the file id and name fields are identical.
+    "BA105", # Validate that the content item ID doesn't include any slashes (/).
+    "BA106", # Validate that the item's fromversion field is sufficient.
+    "BA108", # Check if there are separators in the folder name.
+    "BA109", # Check if there are separators in the script or integration files names.
+    "BA110", # Check that the entity name or display name does not contain the entity type.
+    "BA111", # Checks whether the name of a content item contains an excluded word.
+    "BA113", # Checks for content item names with trailing spaces.
+    "BA114", # Validate that we didn't move a content item from one pack to another.
+    "BA116", # validate that the CLI name and the id match for incident and indicators field
+    "BA118", # Validate that the item's toversion is greater/equal then its fromversion.
+    "BA119", # Validate that the python file doesn't have a copyright section with the words - BSD, MIT, Copyright, proprietary.
+    "BA124", # Validate that the script / integration has a unit test file.
+    "BA125", # Validate that customer facing docs and fields don't contain any internal terms that aren't clear for customers.
+    "BA126", # Checks if script/integration is deprecated correctly
+    "BA127", # Validate that the level of depth of the context output path in the yml is lower or equal to 5.
+    "BC100", # Validate that the pack name subtype of the new file matches the old one.
+    "BC101", # Validate that no context output keys were removed from the script's output section.
+    "BC102", # Validate that the context path has been changed.
+    "BC103", # Check if an argument name has been changed.
+    "BC104", # Check if the command name or argument name has been changed.
+    "BC105", # Validate that the ID of the content item was not changed.
+    "BC106", # Check that the fromversion property was not changed on existing Content files.
+    "BC107", # Check that the toversion property was not changed on existing Content files.
+    "BC108", # Ensuring that the 'marketplaces' property hasn't been removed or added in a manner that effectively removes all others.
+    "BC110", # Validate that no new *required* argument are added to an existing command.
+    "BC111", # Ensure that no new *required* arguments are added to an existing script.
+    "BC112", # Ensure that no parameters are removed from an existing integration.
+    "BC113", # Validate that no incident types were removed and no incident fields were changed.
+    "BC114", # Ensure a pre-defined list of fields wasn't removed or modified in the integration yml.
+    "CL100", # Validate that a classifier has a type = classification field.
+    "CR102", # Validates 'search_window' existence and non-emptiness for 'execution_mode' = 'SCHEDULED'.
+    "DA100", # Validate that the dashboard excludes all the unnecessary fields.
+    "DA101", # Validate that the dashboard includes all the necessary fields.
+    "DO100", # Validate that the given content-item does not use the tag 'latest' in its docker image
+    "DO101", # Validate that the given content-item uses demisto docker image
+    "DO102", # Validate that the given content item uses a docker image that is not the native image.
+    "DO103", # Validate that the given content item's docker-image actually exists in dockerhub
+    "DO104", # Validate that the given content item has a docker_image.
+    # We don't case about deprecated docker images at this point
+    # "DO105", # Validate that the given content item uses a docker image that is not deprecated
+    "DO106", # Validate that the given content-item's docker image isn't outdated.
+    "DS100", # Check whether a description file exists for a beta integration.
+    "DS101", # Check if beta disclaimer exists in detailed description
+    "DS104", # Verifies that a Description file is present for an integration.
+    "DS105", # check if DESCRIPTION file contains contribution details.
+    "DS106", # Check if the description file exist and the name is valid.
+    "DS107", # Validate that none of the description lines contains the the word 'demisto'.
+    "DS108", # Ensure that all yml's description fields ends with a dot.
+    "GF100", # Checks if group field is set to 4.
+    "GF101", # Checks if the id starts with `generic_`.
+    "GF102", # Checks if the unsearchable key is set to true
+    # "GR100", # Detect content items that attempt to use other content items which are not supported in all of the marketplaces of the content item.
+    # "GR101", # Validates that source's fromversion &gt;= target's fromversion.
+    # "GR102", # Validates that content items are not used in other content items which have a lower toversion.
+    # "GR103", # Validates that there is no usage of unknown content items
+    # "GR104", # Validate that there are no duplicate display names of packs in the repo
+    # "GR105", # Ensures that each content item has a unique ID to prevent conflicts.
+    # "GR106", # Checks that every test playbook is linked to at least one content item. (the content item has a 'tests:' key with the ID of the test playbook)
+    # "GR107", # Validates that deprecated content items are not used in other content items.
+    # "GR108", # Validates that non-hidden packs do not have a hidden packs as mandatory dependencies.
+    "IF100", # Checks if the name and cliName do not contain potential incident synonyms.
+    "IF101", # Checks if the incident field is marked as content.
+    "IF102", # Checks if system flag is false.
+    "IF103", # Checks if given field type is valid.
+    "IF104", # Checks if group field is set to 0.
+    "IF105", # Checks if cliName field is alphanumeric and lowercase.
+    "IF106", # Checks if `cliName` field is not a reserved word.
+    "IF111", # Checks if the field type changed.
+    "IF113", # Checks if field name starts with its pack name or one of the item prefixes from pack metadata.
+    "IF115", # Checks if the `unsearchable` key set to true.
+    "IF116", # We do not allow for incidentFields with multySelect types to have in the selectValues emtpy options
+    "IF119", # We do not allow for incidentFields with singleSelect types to have in the selectValues more than one or only emtpy option
+    "IM100", # Checks if the integration has an image path.
+    "IM101", # Checks that the image file size are matching the requirements.
+    "IM106", # Checks if the integration has an image other than the default ones.
+    "IM108", # Checks that the author image file is not empty
+    "IM109", # Checks if the pack has an author image path.
+    "IM111", # Checks that the image file dimensions are matching the requirements.
+    "IN100", # Validate that the proxy & insecure params are configured correctly.
+    "IN101", # Outputs of reputation commands must adhere to standards.
+    "IN102", # Validate that the checkbox param is configured correctly with required argument set to false.
+    "IN104", # Validate that the Integrations category is valid.
+    "IN106", # Validate that the command is valid as a reputation command.
+    "IN107", # Validate that the reputation commands include the list of required contextPaths.
+    "IN108", # Validate wether the subtype is valid or not.
+    "IN109", # Validate that the ID field doesn't include the substring 'beta'.
+    "IN110", # Validate that the name field doesn't include the substring 'beta'.
+    "IN112", # Validate that the display name contain the substring 'beta'.
+    "IN113", # Prevent duplicate arguments for integrations.
+    "IN114", # Validate that there're no duplicated params for the integration.
+    "IN115", # Validate that the contextPath field of each output is in the right format.
+    "IN117", # Validate that type 17 configuration params doesn't include the display field.
+    "IN118", # Validate that the integration parameter has a display field if it's not of type 17.
+    "IN121", # Validate that fetch integration has the required params in the right format.
+    "IN122", # Validate that all existing params are in the right format for feed params.
+    "IN123", # Checks if integration display name is versioned correctly, e.g.: ends with v&lt;number&gt;.
+    "IN124", # Validate that a param is not hidden if it can not be hidden.
+    "IN125", # Validate that the max_fetch param has a defaultvalue
+    "IN126", # Validate that a fetch integration is not missing the first_fetch & max_fetch params.
+    "IN127", # Validate that a deprecated integration display name ends with (Deprecated).
+    "IN130", # validate that the integration is runable
+    "IN131", # Validate that the integration is valid as a mappable integration.
+    "IN134", # Checks whether a content item has multiple default arguments.
+    "IN135", # Validate that the parameter display name starts with a capital letter and doesn't contain '_'.
+    "IN139", # Validate that there's no 'incident' in any of the commands names or arguments names for core packs integrations.
+    "IN141", # Validate that an endpoint command has at least one of the required fields.
+    "IN142", # Validate that the integration contain the right additionalinfo fields for the list of params with predefined additionalinfo.
+    "IN144", # Validate that a reputation command has isArray field set to True for its default argument.
+    "IN145", # Validate that xsoar supported integrations don't have a non-hidden type 4 params.
+    "IN146", # Validate that there's no fromlicense param field in non Xsoar supported integration
+    "IN149", # Validate that a contextPath has a description if it belongs to a predefined list of contextPaths that should have a description.
+    "IN151", # Validate that all commands has at least one argument
+    "IN152", # Validate that the default value of a checkbox param is valid.
+    "IN153", # Validate that that the url default param starts with https rather than http.
+    "IN154", # Validate that feed integration and integrations with reputation commands have a reliability param.
+    "IN156", # Validate that the hidden field value contain only valid values.
+    "IN158", # Validate that the description for non-deprecated integrations is not in the deprecation format
+    "IN159", # Validate that the capitalization of reputation command specific keys is correct.
+    "IN160", # Validate that the display name for non-deprecated integration doesn't end with '(Deprecated)'.
+    "IN161", # Validate that the marketplacev2 tag appear in the marketplaces list of a siem integration.
+    "IN162", # Validate that the support level header for a collector integration in a Partner pack is set to Xsoar.
+    "IN163", # Validate feedExpirationPolicy parameter is in the right formatfor both incremental and fully fetched feeds
+    "IT100", # Checks if the included fields have a positive integer value.
+    "IT101", # Checks if playbook ID is valid.
+    "IT102", # Check if extractSettings field is valid.
+    "IT103", # Check if auto extract mode valid.
+    "LO107", # Ensures that only supported types are used in the layout for XSIAM compatibility.
+    "MR100", # Validate that each modeling rule has a corresponding schema file.
+    "MR101", # Validate that the modeling rules keys - "rules" and "schema" exist and are empty
+    "MR106", # Verifies that each specified data type in the schema files of modeling rules conforms to a predefined set of acceptable types.
+    "MR107", # Validate that the dataset name of a modeling rule shows in the xif and schema files match.
+    "MR108", # Checks that id and name in the modeling rule, end with the correct suffixes.
+    "PA100", # Validate that all the tags in tags field have a valid prefix.
+    "PA101", # Validate that the version mentioned in the Pack metadata matches the latest RN version.
+    "PA102", # Validate that the pack is deprecated if it needs to.
+    "PA103", # Validate that the pack categories are valid.
+    "PA104", # Validate that the modules field include only labels from the list of allowed labels.
+    "PA105", # Validate that the pack has the marketplacev2 label if it include modules.
+    "PA107", # Ensure that mandatory fields exist in the pack_metadata.
+    "PA108", # Validate that the pack name field exist and is different from the default one.
+    "PA109", # Validate that the metadata description field isn't empty and is different from the default one.
+    "PA111", # Validate that certain metadata fields are not empty.
+    "PA113", # Validate that a partner/developer pack has at least an email or a url address fields filled.
+    "PA114", # Ensure that the pack metadata version is raised on relevant changes.
+    "PA115", # Validate that the pack_metadata created field is in ISO format.
+    "PA117", # Validate that the pack's support type is a valid support type.
+    "PA118", # Validate that the metadata's certification field is valid.
+    "PA119", # Validate that the metadata's usecases field include valid usecases.
+    "PA120", # Validate that metadata's tag section include only approved tags.
+    "PA121", # Validate that no changes were done to the pack's price.
+    "PA123", # Validate that the pack has at least one of PB, incidents Types or Layouts if the tags section contains the 'Use Case' tag.
+    "PA124", # Validates that core packs do not depend on non-core packs.
+    "PA125", # Validate that the pack name is valid.
+    "PA127", # Validate that the pack metadata contains a valid URL field.
+    "PA128", # Checks for required pack files
+    "PA130", # Validate that the pack_metadata version field is in valid format.
+    "PA131", # Validate that the pack_metadata contains a default datasource, if there are more than one datasource.
+    "PA132", # Validate that the pack_metadata contains a valid default datasource, when provided.
+    "PB100", # Validate whether the playbook has a rolename. If the Playbook has a rolename it is not valid.
+    "PB101", # Checks whether an ask conditional has task with unreachable next task condition.
+    "PB103", # Validate whether there is an unconnected task.
+    "PB104", # Validate whether a deprecated playbook has a valid description.
+    "PB105", # Validate whether the playbook has a DeleteContext with all set to 'Yes'. If the Playbook has it, it is not valid.
+    "PB106", # Validate whether the playbook does not use an instance. If the Playbook use an instance it is not valid.
+    "PB108", # Validate that the task ID and the 'id' under the 'task' field are from UUID format.
+    "PB109", # Check that taskid field and id field under task field contains equal values.
+    "PB114", # Validates that playbooks for indicator types will be on quiet mode.
+    "PB115", # Checks if the 'quietmode' field of all tasks in playbook are not in default value.
+    "PB116", # The validation checks that all playbook tasks stop when encountering an error.
+    "PB118", # Validate that all inputs described in the playbooks input section are used in tasks.
+    "PB119", # Validates that all inputs used are defined.
+    "PB122", # Validate whether branches of built-in conditional tasks are handled properly.
+    "PB123", # Checks whether an ask conditional has unhandled reply options.
+    "PB124", # Make sure that all conditional tasks contains at least 2 next tasks.
+    "PB125", # Validates that a condition task doesn't has only a default next-task.
+    "PB126", # Ensure that conditional tasks have an execution path besides for the default.
+    "PB127", # Ensure that any yml keys that are marketplace only have a default non-marketplace counterpart.
+    "PR101", # Checks that id and name in the parsing rule, end with the correct suffixes.
+    "RM100", # Check that there are no default leftovers such as:.     1. 'FILL IN REQUIRED PERMISSIONS HERE'..     2. unexplicit version number - such as "version xx of"..     3. Default description belonging to one of the examples integrations`
+    "RM101", # Validate images absolute paths, and prints the suggested path if it's not valid.
+    "RM102", # Validates that all context outputs defined in the README file are present in the YML file, and vice versa.
+    "RM104", # Validate that the pack contains a full README.md file with pack information.
+    "RM105", # Checks if the README.md file is not same as the pack description.
+    "RM106", # Validate that none of the readme lines contains the the word 'demisto'.
+    "RM107", # Checks if there are the generic sentence '%%FILL HERE%%' in the README content.
+    "RM108", # This validation verifies that images in the readme and description files are relative and stored in doc_files.
+    "RM109", # Validates if there is a readme file for the content item.
+    "RM110", # Validates that all commands are mentioned in the README file
+    "RM113", # Validate that non of the readme lines contains the disallowed copyright section keywords.
+    "RM114", # Validate that images placed under doc_files folder and used in README exist.
+    "RM115", # Check that there are no default leftovers such as:.     1. 'FILL IN REQUIRED PERMISSIONS HERE'..     2. unexplicit version number - such as "version xx of"..     3. Default description belonging to one of the examples integrations
+    "RM116", # Validate that the readme file is not to short
+    "RN103", # Validate that the pack contains a full release note file.
+    "RN105", # Validate there're no more than one Added rn for each pack.
+    "RN108", # Validate that a new pack doesn't have a RN,
+    "RN112", # Validate that if RN contains 'breaking change' then the breaking change release note exist and filled correctly.
+    "RN114", # Validate the existence of content types in the first-level headers (####) and the content items in second-level headers (#####).
+    "RN116", # Validate that the release note has either a valid first level header or a valid force header.
+    "RP101", # Validate that the 'expiration' field has a non-negative integer value.
+    "RP102", # Validate that the id and the details fields are equal.
+    "RP103", # Validate that the 'id' field of indicator type has valid value.
+    "SC100", # Checks if script name is versioned correctly, e.g.: ends with V&lt;number&gt;.
+    "SC105", # Checks that script arguments do not container the word incident in core packs
+    "SC106", # Checks that the script runas is not equal to DBotRole
+    # This validator leads to every docker image defined in the content repo being checked for availablirty. So we disable it ;)
+    # "SC109", # Validate that there are no scripts with the same type and the same name.
+    "ST110", # Validate that the scheme's structure is valid.
+]
 
-[tool.poetry.group.testing.dependencies]
-pytest = "^7.1.2"
-requests-mock = "^1.9.3"
-pytest-mock = "^3.7.0"
-freezegun = "^1.1.0"
-mock-open = "^1.4.0"
-
-# If mypy requires for a `types-*` package, add it here with `poetry add --group typing <package>`
-[tool.poetry.group.typing.dependencies]
-types-python-dateutil = "^2.8.19.3"
-
-
-[tool.poetry.group.ci]
-optional = true
-
-[tool.poetry.group.ci.dependencies]
-blessings = "^1.7"
-coloredlogs = "^15.0.1"
-pandas = "^1.3.3"
-prettytable = "^3.2.0"
-pyspellchecker = "^0.6.2"
-sendgrid = "^6.6.0"
-slack_sdk = "^3.11.2"
-timeout_decorator = "^0.5.0"
-ujson = "^5.1.0"
-yamlordereddictloader = "^0.4.0"
-parinx = {git = "https://github.com/npsolve/parinx.git", rev = "6493798ceba8089345d970f71be4a896eb6b081d"}
-python-gitlab = "^3.0.0"
-PyGithub = "^1.54.1"
-ansible-runner = "^2.2.0"
-paramiko = "^2.11.0"
-boto3 = "^1.23.5"
-jsonschema = "^4.6.0"
-google-cloud-bigquery = "^3.2.0"
-db-dtypes = "^1.0.1"
-google-cloud-secret-manager = "^2.13.0"
-json5 = "^0.9.10"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+warning = []
