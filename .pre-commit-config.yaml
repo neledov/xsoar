@@ -28,3 +28,4 @@ repos:
         pass_filenames: false
         language: system
         require_serial: true
+        exclude: ^\.secrets_ignore$ 
