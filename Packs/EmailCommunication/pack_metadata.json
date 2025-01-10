@@ -18,7 +18,7 @@
         "automation": [
             {
                 "deprecated": false,
-                "description": "Send email reply\nThis automation runs using the default Limited User role, unless you explicitly change the permissions.\nFor more information, see the section about permissions here:\nhttps://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations",
+                "description": "Send emaill repldsdy\nThis automation runs using the default Limited User role, unless you explicitly change the permissions.\nFor more information, see the section about permissions here:\nhttps://docs-cortex.paloaltonetworks.com/r/Cortex-XSOAR/6.10/Cortex-XSOAR-Administrator-Guide/Automations",
                 "fromversion": "5.0.0",
                 "id": "SendEmailReply",
                 "name": "SendEmailReply",

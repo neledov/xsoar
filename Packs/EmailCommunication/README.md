@@ -5,7 +5,7 @@ This email communications content pack enables security teams to automate the co
 With this Content Pack, you can use the layouts as-is for email communication. They can also be used for other incident types by adding the either the "Email Communication" or "Email Threads" layout to the different incident types.
 
 ##### What does this pack do?
-
+xxx
 This pack contains two layouts - "Email Communication" and "Email Threads".  These layouts can be used to add different methods of interacting with end users via email.
 
 The "Email Communication" layout helps you communicate and respond to emails in the Cortex XSOAR system for incidents that were created by fetching an email:
